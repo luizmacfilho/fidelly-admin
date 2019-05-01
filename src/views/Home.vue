@@ -1,18 +1,31 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <v-toolbar app fixed clipped-left>
+      <v-toolbar-title>Home</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items>
+        <v-btn to="/login" flat small>Login</v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
+    <v-container class="home" fluid>
+      HOME
+      <v-btn @click="application.toggleMenu()"> menu</v-btn>
+    </v-container>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import { application, IApplication } from '@/components/Application';
 
-@Component({
-  components: {
-    HelloWorld,
-  },
-})
-export default class Home extends Vue {}
+@Component
+export default class Home extends Vue {
+
+  public application: IApplication;
+
+  constructor() {
+    super();
+    this.application = application;
+  }
+}
 </script>

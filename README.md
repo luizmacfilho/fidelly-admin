@@ -1,4 +1,4 @@
-# fidelly
+# fidelly-admin
 
 ## Project setup
 ```

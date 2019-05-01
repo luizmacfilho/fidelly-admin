@@ -1,0 +1,38 @@
+export const messages = {
+  'en-US': {
+    message: {
+      confirm_password: 'Confirm password',
+      create_account: 'Create an account',
+      email: 'Email',
+      enter_email: 'Enter an email',
+      enter_password: 'Enter a passward',
+      first_name: 'First name',
+      forgot_password: 'Forgot your password?',
+      last_name: 'Last name',
+      login_text: 'Sign in',
+      login_question: 'Já possui cadastro?',
+      password: 'Password',
+      sign_in: 'Sign in',
+      signup_question: 'New to Fiddely?',
+      signup_text: 'Create an account',
+    },
+  },
+  'pt-BR': {
+    message: {
+      confirm_password: 'Confirmar senha',
+      create_account: 'Criar conta',
+      email: 'E-mail',
+      enter_email: 'Digite um email',
+      enter_password: 'Digite uma senha',
+      first_name: 'Nome',
+      forgot_password: 'Esqueceu sua senha?',
+      last_name: 'Sobrenome',
+      login_text: 'Realizar login',
+      login_question: 'Já possui cadastro?',
+      password: 'Senha',
+      sign_in: 'Enviar',
+      signup_question: 'Novo no Fidelly?',
+      signup_text: 'Realizar cadastro',
+    },
+  },
+};
