@@ -8,6 +8,11 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '*',
+      name: 'not_found',
+      component: () => import(/* webpackChunkName: "not_found" */ './components/404.vue'),
+    },
+    {
       path: '/',
       name: 'home',
       component: () => import(/* webpackChunkName: "home" */ './views/Home.vue'),
@@ -26,6 +31,11 @@ export default new Router({
       path: '/password_reset',
       name: 'password_reset',
       component: () => import(/* webpackChunkName: "password_reset" */ './views/PasswordReset.vue'),
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import(/* webpackChunkName: "dashboard" */ './views/Dashboard.vue'),
     },
   ],
 });

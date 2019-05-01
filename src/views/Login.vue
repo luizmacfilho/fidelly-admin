@@ -12,7 +12,7 @@
           <router-link to="/password_reset" >
             <a>{{ $t("message.forgot_password") }}</a>
           </router-link>
-          <v-btn color="primary">{{ $t('message.sign_in') }}</v-btn>
+          <v-btn color="primary" to="/dashboard">{{ $t('message.sign_in') }}</v-btn>
         </v-layout>
         <div class="login__signin">
           <span class="login__signin__separator"></span>

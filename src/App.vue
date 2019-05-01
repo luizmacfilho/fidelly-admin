@@ -1,6 +1,6 @@
 <template>
   <v-app id="app">
-    <v-navigation-drawer v-if="application.showMenu" v-model="application.menuOpened" app></v-navigation-drawer>
+    <Sidenav />
     <v-content>
       <router-view />
     </v-content>
@@ -10,18 +10,12 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import { application, IApplication } from '@/components/Application';
+import Sidenav from './components/Sidenav.vue';
 
-@Component
-export default class App extends Vue {
-
-  public application: IApplication;
-
-  constructor() {
-    super();
-    this.application = application;
-  }
-}
+@Component({
+  components: { Sidenav }
+})
+export default class App extends Vue {}
 </script>
 
 <style lang="scss" scoped>

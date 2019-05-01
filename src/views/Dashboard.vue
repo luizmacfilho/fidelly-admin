@@ -1,13 +1,11 @@
 <template>
-  <div class="home">
-    <v-toolbar app fixed clipped-left flat>
-      <v-toolbar-title>Fidelly</v-toolbar-title>
+  <div class="dashboard">
+    <v-toolbar app fixed clipped-left>
+      <v-toolbar-side-icon @click.stop="application.toggleMenu()"></v-toolbar-side-icon>
+      <v-toolbar-title>{{ $t('message.dashboard') }}</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items>
-        <v-btn to="/login" flat small>Login</v-btn>
-      </v-toolbar-items>
     </v-toolbar>
-    <v-container class="home" fluid>
+    <v-container class="dashboard__container" fluid>
     </v-container>
   </div>
 </template>
@@ -17,14 +15,14 @@ import { Component, Vue } from 'vue-property-decorator';
 import { application, IApplication } from '@/components/Application';
 
 @Component
-export default class Home extends Vue {
+export default class Dashboard extends Vue {
 
   public application: IApplication;
 
   constructor() {
     super();
     this.application = application;
-    this.application.showMenu = false;
+    this.application.showMenu = true;
   }
 }
 </script>
