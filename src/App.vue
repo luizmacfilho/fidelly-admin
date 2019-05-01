@@ -31,7 +31,7 @@ export default class App extends Vue {
 </style>
 
 <style lang="scss">
-.v-messages__message {
+.v-messages__wrapper > .v-messages__message {
   line-height: 1;
 }
 </style>

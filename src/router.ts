@@ -22,5 +22,10 @@ export default new Router({
       name: 'signup',
       component: () => import(/* webpackChunkName: "signup" */ './views/Signup.vue'),
     },
+    {
+      path: '/password_reset',
+      name: 'password_reset',
+      component: () => import(/* webpackChunkName: "password_reset" */ './views/PasswordReset.vue'),
+    },
   ],
 });

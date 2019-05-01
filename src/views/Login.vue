@@ -1,27 +1,31 @@
 <template>
-  <v-container fluid fill-height class="login">
-    <v-layout justify-center align-center column class="login__content">
-      <v-form v-model="valid" class="login__form">
-        <v-text-field outline :label="$t('message.email')" validate-on-blur :rules="rules.email"></v-text-field>
-        <v-text-field outline type="password" :label="$t('message.password')" validate-on-blur :rules="rules.password"></v-text-field>
-        <v-layout justify-space-between class="login__form__buttons">
-          <router-link to="/" >
+  <v-form v-model="valid" class="login">
+    <v-container fluid class="login__container">
+      <v-layout row wrap class="login__content">
+        <v-flex sm12>
+          <v-text-field :label="$t('message.email')" validate-on-blur :rules="rules.email"></v-text-field>
+        </v-flex>
+        <v-flex sm12>
+          <v-text-field type="password" :label="$t('message.password')" validate-on-blur :rules="rules.password"></v-text-field>
+        </v-flex>
+        <v-layout justify-space-between class="login__buttons">
+          <router-link to="/password_reset" >
             <a>{{ $t("message.forgot_password") }}</a>
           </router-link>
           <v-btn color="primary">{{ $t('message.sign_in') }}</v-btn>
         </v-layout>
-      </v-form>
-      <div class="login__signin">
-        <span class="login__signin__separator"></span>
-        <span class="login__signin__text">
-          {{ $t('message.signup_question') }}
-          <router-link to="/signup" >
-            <a>{{ $t("message.signup_text") }}</a>
-          </router-link>
-        </span>
-      </div>
-    </v-layout>
-  </v-container>
+        <div class="login__signin">
+          <span class="login__signin__separator"></span>
+          <span class="login__signin__text">
+            {{ $t('message.signup_question') }}
+            <router-link to="/signup" >
+              <a>{{ $t("message.signup_text") }}</a>
+            </router-link>
+          </span>
+        </div>
+      </v-layout>
+    </v-container>
+  </v-form>
 </template>
 
 <script lang="ts">
@@ -47,25 +51,23 @@ export default class Login extends Vue {
 </script>
 <style lang="scss">
 .login {
-  background-color: white;
-  padding: 0;
+  display: flex;
+  height: 100%;
+
+  &__container.fluid {
+    max-width: 350px;
+  }
 
   &__content {
     height: 100%;
-    max-width: 350px;
     margin: auto;
-    padding: 20px;
   }
 
-  &__form {
-    width: 100%;
+  &__buttons {
+    padding: 0 8px;
 
-    &__buttons {
-      margin-top: 10px;
-
-      > a, > button {
-        margin: auto 0;
-      }
+    > a, > button {
+      margin: auto 0;
     }
   }
 
@@ -73,6 +75,7 @@ export default class Login extends Vue {
     width: 100%;
     margin-top: 35px;
     text-align: center;
+    padding: 0 8px;
 
     &__separator {
       width: 100%;

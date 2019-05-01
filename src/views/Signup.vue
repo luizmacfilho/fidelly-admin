@@ -1,28 +1,41 @@
 <template>
-  <v-container fluid fill-height class="signup">
-    <v-layout justify-center align-center column class="signup__content">
-      <v-form v-model="valid" class="signup__form">
-        <v-text-field outline :label="$t('message.first_name')" validate-on-blur :rules="rules.name"></v-text-field>
-        <v-text-field outline :label="$t('message.last_name')" validate-on-blur :rules="rules.name"></v-text-field>
-        <v-text-field outline type="email" :label="$t('message.email')" validate-on-blur :rules="rules.email"></v-text-field>
-        <v-text-field outline type="password" :label="$t('message.password')" validate-on-blur :rules="rules.password"></v-text-field>
-        <v-text-field outline type="password" :label="$t('message.confirm_password')" validate-on-blur :rules="rules.password"></v-text-field>
-        <v-layout justify-space-between class="signup__form__buttons">
+  <v-form v-model="valid" class="signup">
+    <v-container fluid class="signup__container">
+      <v-layout row wrap class="signup__content">
+        <v-flex xs12 sm6>
+          <v-text-field :label="$t('message.first_name')" validate-on-blur :rules="rules.name"></v-text-field>
+        </v-flex>
+        <v-flex xs12 sm6>
+          <v-text-field :label="$t('message.last_name')" validate-on-blur :rules="rules.name"></v-text-field>
+        </v-flex>
+        <v-flex xs12 sm6>
+          <v-text-field type="email" :label="$t('message.email')" validate-on-blur :rules="rules.email"></v-text-field>
+        </v-flex>
+        <v-flex xs12 sm6>
+          <v-text-field type="tel" :label="$t('message.cnpj')" validate-on-blur></v-text-field>
+        </v-flex>
+        <v-flex xs12 sm6>
+          <v-text-field type="password" :label="$t('message.password')" validate-on-blur :rules="rules.password"></v-text-field>
+        </v-flex>
+        <v-flex xs12 sm6>
+          <v-text-field type="password" :label="$t('message.confirm_password')" validate-on-blur :rules="rules.password"></v-text-field>
+        </v-flex>
+        <v-layout justify-space-between class="signup__buttons">
           <v-spacer></v-spacer>
           <v-btn color="primary">{{ $t('message.create_account') }}</v-btn>
         </v-layout>
-      </v-form>
-      <div class="signup__login">
-        <span class="signup__login__separator"></span>
-        <span class="signup__login__text">
-          {{ $t('message.login_question') }}
-          <router-link to="/login" >
-            <a>{{ $t("message.login_text") }}</a>
-          </router-link>
-        </span>
-      </div>
-    </v-layout>
-  </v-container>
+        <div class="signup__login">
+          <span class="signup__login__separator"></span>
+          <span class="signup__login__text">
+            {{ $t('message.login_question') }}
+            <router-link to="/login" >
+              <a>{{ $t("message.login_text") }}</a>
+            </router-link>
+          </span>
+        </div>
+      </v-layout>
+    </v-container>
+  </v-form>
 </template>
 
 <script lang="ts">
@@ -48,25 +61,23 @@ export default class SignUp extends Vue {
 </script>
 <style lang="scss">
 .signup {
-  background-color: white;
-  padding: 0;
+  display: flex;
+  height: 100%;
+
+  &__container.fluid {
+    max-width: 600px;
+  }
 
   &__content {
     height: 100%;
-    max-width: 350px;
     margin: auto;
-    padding: 20px;
   }
 
-  &__form {
-    width: 100%;
+  &__buttons {
+    padding: 0 8px;
 
-    &__buttons {
-      margin-top: 10px;
-
-      > a, > button {
-        margin: auto 0;
-      }
+    > a, > button {
+      margin: auto 0;
     }
   }
 
@@ -74,6 +85,7 @@ export default class SignUp extends Vue {
     width: 100%;
     margin-top: 35px;
     text-align: center;
+    padding: 0 8px;
 
     &__separator {
       width: 100%;
