@@ -1,11 +1,13 @@
 export const messages = {
   'en-US': {
     message: {
+      category: 'Category',
       clients: 'Clients',
       cnpj: 'CNPJ',
       confirm_password: 'Confirm password',
       create_account: 'Create an account',
       dashboard: 'Dashboard',
+      description: 'Description',
       email: 'Email',
       enter_email: 'Enter an email',
       enter_password: 'Enter a passward',
@@ -15,14 +17,17 @@ export const messages = {
       last_name: 'Last name',
       login_question: 'Already registered?',
       login_text: 'Sign in.',
+      logo: 'Logo',
       my_store: 'My store',
       password: 'Password',
       password_reset_message: 'Enter your email address and we will send you a link to reset your password.',
+      phone_number: 'Phone number',
       reports: 'Reports',
       send_email: 'Send email',
       sign_in: 'Sign in',
       signup_question: 'New to Fiddely?',
       signup_text: 'Create an account.',
+      store_name: 'Name',
     },
   },
   'pt-BR': {

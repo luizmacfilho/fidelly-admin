@@ -20,7 +20,7 @@ class Application implements IApplication {
   /**
    * Define menu is opened
    */
-  public menuOpened: boolean = true;
+  public menuOpened: boolean = window.innerWidth > 1264;
 
   /**
    * Toggles menu visibility or opens/closes menu
