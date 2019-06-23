@@ -27,7 +27,7 @@ import { application, IApplication } from './Application';
 export default class Sidenav extends Vue {
 
   public application: IApplication;
-  public items: { icon: string; title: string, to: string }[] = [
+  public items: Array<{ icon: string; title: string, to: string }> = [
     { icon: 'dashboard', title: (window as any).$i18n.t('message.dashboard'), to: '/dashboard' },
     { icon: 'star ', title: 'Fidelly', to: '/fidelly' },
     { icon: 'people', title: (window as any).$i18n.t('message.clients'), to: '/clients' },

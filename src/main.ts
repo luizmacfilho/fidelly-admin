@@ -6,6 +6,7 @@ import VueI18n from 'vue-i18n';
 import { messages } from './messages';
 import './registerServiceWorker';
 import './plugins';
+import './zeedhi';
 
 Vue.config.productionTip = false;
 
@@ -16,8 +17,9 @@ const i18n = new VueI18n({
 });
 
 /**
- * Watch this issue, when finished, replace (window as any).$i18n to this.$i18n
- * https://github.com/kazupon/vue-i18n/issues/574
+ * Watch the issue, when finished, replace (window as any).$i18n to this.$i18n
+ * and remove the following code.
+ * Issue: https://github.com/kazupon/vue-i18n/issues/574
  */
 (window as any).$i18n = i18n;
 

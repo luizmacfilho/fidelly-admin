@@ -1,0 +1,19 @@
+{
+  "name": "home",
+  "controller": "HomeController",
+  "events": {
+    "onCreated": "HomeController.onCreated"
+  },
+  "children": [
+    {
+      "name": "report",
+      "is": "ZdButton",
+      "label": "Some button",
+      "fab": true,
+      "bottom": true,
+      "right": true,
+      "fixed": true,
+      "icon": "close"
+    }
+  ]
+}

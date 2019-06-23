@@ -13,7 +13,7 @@ import Component from 'vue-class-component';
 import Sidenav from './components/Sidenav.vue';
 
 @Component({
-  components: { Sidenav }
+  components: { Sidenav },
 })
 export default class App extends Vue {}
 </script>
