@@ -1,8 +1,17 @@
 <template>
   <v-btn
-    :fab="fab" :bottom="bottom"
-    :right="right" :fixed="fixed">
-    <v-icon>{{icon}}</v-icon>
+    v-bind="{
+      color: props.color,
+      fab: props.fab,
+      bottom: props.bottom,
+      right: props.right,
+      fixed: props.fixed,
+      left: props.left,
+      top: props.top,
+    }">
+    <v-icon left v-if="props.iconLeft">{{ props.iconLeft }}</v-icon>
+    {{ props.label }}
+    <v-icon right v-if="props.iconRight">{{ props.iconRight }}</v-icon>
   </v-btn>
 </template>
 
@@ -13,13 +22,11 @@ import { Prop, Component } from 'vue-property-decorator';
 @Component
 export default class ZdButton extends Vue {
 
-  @Prop() public name!: string;
-  @Prop({ default: '' }) public label!: string;
-  @Prop({ default: '' }) public icon!: string;
-  @Prop({ default: false }) public fab!: boolean;
-  @Prop({ default: false }) public bottom!: boolean;
-  @Prop({ default: false }) public right!: boolean;
-  @Prop({ default: false }) public fixed!: boolean;
+  @Prop({ default: () => ({}) }) public props!: any;
+
+  created() {
+    this.props.validate = () => {console.log('validate')}
+  }
 
 }
 </script>

@@ -2,7 +2,7 @@
   <v-container>
     <component
       v-for="(child, index) in page.children"
-      :key="index" :is="child.is" v-bind="child">
+      :key="index" :is="child.is" :props="child">
     </component>
   </v-container>
 </template>

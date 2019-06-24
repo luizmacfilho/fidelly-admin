@@ -6,14 +6,10 @@
   },
   "children": [
     {
-      "name": "report",
       "is": "ZdButton",
-      "label": "Some button",
-      "fab": true,
-      "bottom": true,
-      "right": true,
-      "fixed": true,
-      "icon": "close"
+      "color": "error",
+      "label": "Teste",
+      "iconRight": "add"
     }
   ]
 }
