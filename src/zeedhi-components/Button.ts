@@ -1,4 +1,5 @@
 import { EventFactory } from '@/zeedhi/index';
+import { Events } from '@/zeedhi/event';
 
 export interface ButtonEvent {
   component: Button;
@@ -10,12 +11,13 @@ export interface IButton {
   bottom: boolean;
   right: boolean;
   fixed: boolean;
+  absolute: boolean;
   left: boolean;
   top: boolean;
   label: string;
   iconLeft: string;
   iconRight: string;
-  events: any;
+  events: Events<ButtonEvent>;
 }
 
 export class Button implements IButton {
@@ -27,10 +29,11 @@ export class Button implements IButton {
   public fixed: boolean;
   public left: boolean;
   public top: boolean;
+  public absolute: boolean;
   public label: string;
   public iconLeft: string;
   public iconRight: string;
-  public events: any;
+  public events: Events<ButtonEvent>;
 
   constructor(props: IButton) {
     this.color = props.color;
@@ -40,10 +43,17 @@ export class Button implements IButton {
     this.fixed = props.fixed;
     this.left = props.left;
     this.top = props.top;
+    this.absolute = props.absolute;
     this.label = props.label;
     this.label = props.label;
     this.iconLeft = props.iconLeft;
     this.iconRight = props.iconRight;
-    this.events = EventFactory.factoryEvents(props.events);
+    this.events = EventFactory.factoryEvents<ButtonEvent>(props.events);
+  }
+
+  public click() {
+    if (this.events.click) {
+      this.events.click({ component: this });
+    }
   }
 }

@@ -23,18 +23,23 @@ export class ZdEvent {
   }
 }
 
+export interface Events<T> {
+  [key: string]: (event: T) => boolean|undefined;
+}
+
+interface PreEvents<T> {
+  [key: string]: string|((event: T) => boolean|undefined);
+}
 /**
  * Event Factory
  */
 // tslint:disable-next-line: max-classes-per-file
 export class EventFactory {
 
-  public static factoryEvents(
-    events: { [key: string]: string|((event: any) => boolean|undefined) },
-  ): { [key: string]: (event: any) => boolean|undefined } {
+  public static factoryEvents<T>(events: PreEvents<T>): Events<T> {
     let controller: any;
     let eventObj: { controller: string; method: string };
-    const factoredEvents: { [key: string]: (event: any) => boolean|undefined } = {};
+    const factoredEvents: Events<T> = {};
     for (const event in events) {
       if (typeof events[event] === 'string') {
         eventObj = this.getEventObject(events[event] as string);

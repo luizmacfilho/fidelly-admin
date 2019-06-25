@@ -4,6 +4,7 @@
       v-for="(child, index) in page.children"
       :key="index" :is="child.is" v-bind="child">
     </component>
+    <zd-button :color="'success'" label="asdf" :events="{ click }" />
   </v-container>
 </template>
 
@@ -25,6 +26,10 @@ export default class ZdPage extends Vue {
     if (this.page.events.onCreated) {
       this.page.events.onCreated({ this: this, props: this.$props, el: this.$el, metadata: this.page});
     }
+  }
+
+  public click() {
+    console.log('clicked');
   }
 }
 </script>

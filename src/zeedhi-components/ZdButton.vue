@@ -1,5 +1,6 @@
 <template>
   <v-btn
+    @click="instance.click()"
     v-bind="{
       color: instance.color,
       fab: instance.fab,
@@ -18,18 +19,21 @@
 <script lang="ts">
 import Vue from 'vue';
 import ZdComponent from './ZdComponent';
-import { Button, IButton } from './Button';
+import { Button, IButton, ButtonEvent } from './Button';
 import { Prop, Component } from 'vue-property-decorator';
+import { Events } from '../zeedhi/event';
 
 @Component
 export default class ZdButton extends ZdComponent {
 
-  @Prop({ default: () => ({}) }) public events!: any;
+  @Prop({ default: () => ({}) }) public events!: Events<ButtonEvent>;
   @Prop({ default: false }) public fab!: boolean;
   @Prop({ default: false }) public bottom!: boolean;
   @Prop({ default: false }) public right!: boolean;
   @Prop({ default: false }) public fixed!: boolean;
+  @Prop({ default: false }) public absolute!: boolean;
   @Prop({ default: false }) public top!: boolean;
+  @Prop({ default: false }) public left!: boolean;
   @Prop({ default: '' }) public iconLeft!: string;
   @Prop({ default: '' }) public iconRight!: string;
   @Prop({ default: '' }) public label!: string;

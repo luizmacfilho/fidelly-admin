@@ -15,23 +15,28 @@ export class HomeController {
     component.iconRight = '';
   }
 
-  public onBeforeMount(event: any) {
+  public onBeforeMount({ component }: ButtonEvent) {
     // tslint:disable-next-line: no-console
-    console.log('onBeforeMount', event);
+    console.log('onBeforeMount', component);
   }
 
-  public onMounted(event: any) {
+  public onMounted({ component }: ButtonEvent) {
     // tslint:disable-next-line: no-console
-    console.log('onMounted', event);
+    console.log('onMounted', component);
   }
 
-  public onBeforeDestroy(event: any) {
+  public onBeforeDestroy({ component }: ButtonEvent) {
     // tslint:disable-next-line: no-console
-    console.log('onBeforeDestroy', event);
+    console.log('onBeforeDestroy', component);
   }
 
-  public onDestroyed(event: any) {
+  public onDestroyed({ component }: ButtonEvent) {
     // tslint:disable-next-line: no-console
-    console.log('onDestroyed', event);
+    console.log('onDestroyed', component);
+  }
+
+  public click({ component }: ButtonEvent) {
+    // tslint:disable-next-line: no-console
+    console.log('clicked', component);
   }
 }

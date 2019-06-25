@@ -15,8 +15,18 @@
         "onBeforeMount": "HomeController.onBeforeMount",
         "onMounted": "HomeController.onMounted",
         "onBeforeDestroy": "HomeController.onBeforeDestroy",
-        "onDestroyed": "HomeController.onDestroyed"
+        "onDestroyed": "HomeController.onDestroyed",
+        "click": "HomeController.click"
       }
+    },
+    {
+      "is": "ZdButton",
+      "color": "error",
+      "label": "Teste",
+      "fab": true,
+      "fixed": true,
+      "bottom": true,
+      "left": true
     }
   ]
 }
