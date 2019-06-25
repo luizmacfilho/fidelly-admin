@@ -9,7 +9,14 @@
       "is": "ZdButton",
       "color": "error",
       "label": "Teste",
-      "iconRight": "add"
+      "iconRight": "add",
+      "events": {
+        "onCreated": "HomeController.onCreatedButton",
+        "onBeforeMount": "HomeController.onBeforeMount",
+        "onMounted": "HomeController.onMounted",
+        "onBeforeDestroy": "HomeController.onBeforeDestroy",
+        "onDestroyed": "HomeController.onDestroyed"
+      }
     }
   ]
 }

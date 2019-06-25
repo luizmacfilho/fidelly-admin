@@ -21,7 +21,7 @@ import { Prop, Component } from 'vue-property-decorator';
 export default class ZdForm extends Vue {
 
   @Prop() public name!: string;
-  @Prop({ default: () => [] }) public children!: Array<any>;
+  @Prop({ default: () => [] }) public children!: any[];
 
   public valid: boolean = false;
 
