@@ -45,7 +45,6 @@ export class Button implements IButton {
     this.top = props.top;
     this.absolute = props.absolute;
     this.label = props.label;
-    this.label = props.label;
     this.iconLeft = props.iconLeft;
     this.iconRight = props.iconRight;
     this.events = EventFactory.factoryEvents<ButtonEvent>(props.events);

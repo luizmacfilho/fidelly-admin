@@ -17,11 +17,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import ZdComponent from './ZdComponent';
-import { Button, IButton, ButtonEvent } from './Button';
+import ZdComponent from '../ZdComponent';
+import { Events } from '../../zeedhi/event';
 import { Prop, Component } from 'vue-property-decorator';
-import { Events } from '../zeedhi/event';
+import { Button, IButton, ButtonEvent } from '../base/Button';
 
 @Component
 export default class ZdButton extends ZdComponent {

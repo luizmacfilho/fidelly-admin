@@ -20,13 +20,8 @@
       }
     },
     {
-      "is": "ZdButton",
-      "color": "error",
-      "label": "Teste",
-      "fab": true,
-      "fixed": true,
-      "bottom": true,
-      "left": true
+      "is": "ZdTextField",
+      "label": "text"
     }
   ]
 }

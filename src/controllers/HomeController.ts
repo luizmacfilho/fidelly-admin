@@ -1,5 +1,5 @@
 import { application } from '@/components/Application';
-import { ButtonEvent } from '@/zeedhi-components/Button';
+import { ButtonEvent } from '@/zeedhi-components/base/Button';
 
 export class HomeController {
 
