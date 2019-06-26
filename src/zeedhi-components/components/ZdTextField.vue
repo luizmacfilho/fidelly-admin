@@ -1,13 +1,15 @@
 <template>
   <v-text-field
-    :clearable="clearable"
-    :label="label"
-    :type="type">
+    v-bind="{
+      clearable: instance.clearable,
+      label: instance.label,
+      type: instance.type,
+    }">
   </v-text-field>
 </template>
 
 <script lang="ts">
-import ZdComponent from '../ZdComponent';
+import ZdComponent from './ZdComponent';
 import { Prop, Component } from 'vue-property-decorator';
 import { TextField, ITextField, TextFieldEvent } from '../base/TextField';
 

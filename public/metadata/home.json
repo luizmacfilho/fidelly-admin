@@ -1,27 +1,32 @@
 {
-  "name": "home",
-  "controller": "HomeController",
+  "is": "ZdContainer",
   "events": {
     "onCreated": "HomeController.onCreated"
   },
   "children": [
     {
-      "is": "ZdButton",
-      "color": "error",
-      "label": "Teste",
-      "iconRight": "add",
-      "events": {
-        "onCreated": "HomeController.onCreatedButton",
-        "onBeforeMount": "HomeController.onBeforeMount",
-        "onMounted": "HomeController.onMounted",
-        "onBeforeDestroy": "HomeController.onBeforeDestroy",
-        "onDestroyed": "HomeController.onDestroyed",
-        "click": "HomeController.click"
-      }
-    },
-    {
-      "is": "ZdTextField",
-      "label": "text"
+      "is": "ZdLayout",
+      "column": true,
+      "children": [
+        {
+          "is": "ZdButton",
+          "color": "error",
+          "label": "Teste",
+          "iconRight": "add",
+          "events": {
+            "onCreated": "HomeController.onCreatedButton",
+            "onBeforeMount": "HomeController.onBeforeMount",
+            "onMounted": "HomeController.onMounted",
+            "onBeforeDestroy": "HomeController.onBeforeDestroy",
+            "onDestroyed": "HomeController.onDestroyed",
+            "click": "HomeController.click"
+          }
+        },
+        {
+          "is": "ZdTextField",
+          "label": "Name"
+        }
+      ]
     }
   ]
 }

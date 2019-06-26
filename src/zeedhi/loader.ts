@@ -1,6 +1,5 @@
 /**
  * Loader
- * @todo Do it in a better way
  */
 export class Loader {
 
@@ -8,21 +7,12 @@ export class Loader {
     this.controllers = controllers;
   }
 
-  public static getInstance(name: string, args: any[] = []) {
+  public static getInstance(name: string) {
     if (!this.controllers[name]) {
       throw new Error(`Controller ${name} not found`);
     }
-    if (!this.instances[name]) {
-      this.createInstance(name, args);
-    }
+    this.instances[name] = new (this.controllers[name])();
     return this.instances[name];
-  }
-
-  public static createInstance(name: string, args: any[] = []) {
-    if (!this.controllers[name]) {
-      throw new Error(`Controller ${name} not found`);
-    }
-    this.instances[name] = new (this.controllers[name])(...args);
   }
 
   /**

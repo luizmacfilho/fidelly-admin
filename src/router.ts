@@ -43,9 +43,13 @@ export default new Router({
       component: () => import(/* webpackChunkName: "store" */ './views/Store.vue'),
     },
     {
-      path: '/page',
-      name: 'page',
-      component: () => import(/* webpackChunkName: "store" */ './zeedhi-components/ZdPage.vue'),
+      path: '/home',
+      name: 'home',
+      component: () => import(/* webpackChunkName: "store" */ './zeedhi-components/components/ZdPage.vue'),
+      props: {
+        name: 'home',
+        local: true,
+      },
     },
   ],
 });

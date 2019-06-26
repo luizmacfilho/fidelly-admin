@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import ZdComponent from '../ZdComponent';
+import ZdComponent from './ZdComponent';
 import { Events } from '../../zeedhi/event';
 import { Prop, Component } from 'vue-property-decorator';
 import { Button, IButton, ButtonEvent } from '../base/Button';
