@@ -2,6 +2,10 @@ import { EventFactory } from '@/zeedhi/index';
 import { Events } from '@/zeedhi/event';
 import { Loader } from '@/zeedhi/loader';
 
+export interface PropAccessor {
+  [key: string]: { instance: any, accessor: string };
+}
+
 export interface ButtonEvent {
   component: Button;
 }
@@ -36,7 +40,7 @@ export class Button implements IButton {
   public events: Events<ButtonEvent>;
 
   private props: IButton;
-  private accessors: { [key: string]: { instance: any, accessor: string } } = {};
+  private accessors: PropAccessor = {};
 
   constructor(props: IButton) {
     this.props = props;
@@ -51,7 +55,7 @@ export class Button implements IButton {
     this.iconLeft = props.iconLeft;
     this.iconRight = props.iconRight;
     this.events = EventFactory.factoryEvents<ButtonEvent>(props.events);
-    this.initProp(this.props.fab, 'fab');
+    this.initProp(this.accessors, this.props, 'fab');
   }
 
   get fab() {
@@ -59,7 +63,8 @@ export class Button implements IButton {
   }
 
   set fab(fab: boolean|string) {
-    this.initProp(fab, 'fab');
+    this.props.fab = fab;
+    this.initProp(this.accessors, this.props, 'fab');
   }
 
   public click() {
@@ -68,13 +73,13 @@ export class Button implements IButton {
     }
   }
 
-  private initProp(prop: any, name: string) {
-    if (typeof prop === 'string') {
-      const [controller, accessor] = prop.split('.');
+  private initProp(accessors: PropAccessor, props: { [key: string]: any }, name: string) {
+    if (typeof props[name] === 'string' && props[name].match(/^([A-Z]\w*)\.([a-z]\w*)$/)) {
+      const [controller, accessor] = props[name].split('.');
       const instance = Loader.getInstance(controller);
-      this.accessors[name] = { instance, accessor };
+      accessors[name] = { instance, accessor };
     } else {
-      this.accessors[name] = { instance: this.props, accessor: name };
+      accessors[name] = { instance: props, accessor: name };
     }
   }
 }

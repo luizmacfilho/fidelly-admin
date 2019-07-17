@@ -3,15 +3,15 @@ import { ButtonEvent } from '@/zeedhi-components/base/Button';
 
 export class HomeController {
 
-  private cIsFab: boolean|string = false;
+  private isFab: boolean|string = false;
 
-  get isFab() {
-    return this.cIsFab;
-  }
+  // get isFab() {
+  //   return this.cIsFab;
+  // }
 
-  set isFab(isFab: boolean|string) {
-    this.cIsFab = isFab;
-  }
+  // set isFab(isFab: boolean|string) {
+  //   this.cIsFab = isFab;
+  // }
 
   public onCreated() {
     application.showMenu = true;
@@ -34,7 +34,7 @@ export class HomeController {
     // tslint:disable-next-line: no-console
     console.log('onMounted', component);
     setInterval(() => {
-      this.cIsFab = !this.cIsFab;
+      this.isFab = !this.isFab;
     }, 1000);
   }
 
