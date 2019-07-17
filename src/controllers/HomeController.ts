@@ -3,6 +3,16 @@ import { ButtonEvent } from '@/zeedhi-components/base/Button';
 
 export class HomeController {
 
+  private cIsFab: boolean|string = false;
+
+  get isFab() {
+    return this.cIsFab;
+  }
+
+  set isFab(isFab: boolean|string) {
+    this.cIsFab = isFab;
+  }
+
   public onCreated() {
     application.showMenu = true;
   }
@@ -23,6 +33,9 @@ export class HomeController {
   public onMounted({ component }: ButtonEvent) {
     // tslint:disable-next-line: no-console
     console.log('onMounted', component);
+    setInterval(() => {
+      this.cIsFab = !this.cIsFab;
+    }, 1000);
   }
 
   public onBeforeDestroy({ component }: ButtonEvent) {

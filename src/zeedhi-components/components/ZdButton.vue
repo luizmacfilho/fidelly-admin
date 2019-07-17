@@ -26,7 +26,7 @@ import { Button, IButton, ButtonEvent } from '../base/Button';
 export default class ZdButton extends ZdComponent {
 
   @Prop({ default: () => ({}) }) public events!: Events<ButtonEvent>;
-  @Prop({ default: false }) public fab!: boolean;
+  @Prop({ default: false }) public fab!: boolean|string;
   @Prop({ default: false }) public bottom!: boolean;
   @Prop({ default: false }) public right!: boolean;
   @Prop({ default: false }) public fixed!: boolean;

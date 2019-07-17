@@ -11,8 +11,14 @@ export class Loader {
     if (!this.controllers[name]) {
       throw new Error(`Controller ${name} not found`);
     }
-    this.instances[name] = new (this.controllers[name])();
+    if (!this.instances[name]) {
+      this.instances[name] = new (this.controllers[name])();
+    }
     return this.instances[name];
+  }
+
+  public static clearInstances() {
+    this.instances = {};
   }
 
   /**

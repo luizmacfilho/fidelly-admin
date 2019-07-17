@@ -13,6 +13,7 @@
           "color": "error",
           "label": "Teste",
           "iconRight": "add",
+          "fab": "HomeController.isFab",
           "events": {
             "onCreated": "HomeController.onCreatedButton",
             "onBeforeMount": "HomeController.onBeforeMount",
@@ -25,6 +26,9 @@
         {
           "is": "ZdTextField",
           "label": "Name"
+        },
+        {
+          "is": "ZdFlex"
         }
       ]
     }

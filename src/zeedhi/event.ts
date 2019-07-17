@@ -46,7 +46,7 @@ export class EventFactory {
         controller = Loader.getInstance(eventObj.controller);
         factoredEvents[event] = this.getEventMethod(controller, eventObj.method);
       } else {
-        factoredEvents[event] = (events[event] as ((event: any) => boolean|undefined));
+        factoredEvents[event] = (events[event] as ((event: T) => boolean|undefined));
       }
     }
     return factoredEvents;

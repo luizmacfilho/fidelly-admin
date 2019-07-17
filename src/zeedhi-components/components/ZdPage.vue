@@ -6,6 +6,7 @@
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { Metadata } from '../../zeedhi/index';
+import { Loader } from '../../zeedhi/loader';
 
 @Component
 export default class ZdPage extends Vue {
@@ -17,7 +18,10 @@ export default class ZdPage extends Vue {
 
   public async created() {
     this.page = await Metadata.parse(this.name, this.local);
-    delete this.page.controller;
+  }
+
+  public beforeDestroy() {
+    Loader.clearInstances();
   }
 }
 </script>
