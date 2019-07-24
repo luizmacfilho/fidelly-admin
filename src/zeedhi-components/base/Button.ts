@@ -1,6 +1,7 @@
 import { EventFactory } from '@/zeedhi/index';
 import { Events } from '@/zeedhi/event';
 import { Loader } from '@/zeedhi/loader';
+import cloneDeep from 'lodash.clonedeep';
 
 export interface PropAccessor {
   [key: string]: { instance: any, accessor: string };
@@ -27,7 +28,6 @@ export interface IButton {
 
 export class Button implements IButton {
 
-  public color: string;
   public bottom: boolean;
   public right: boolean;
   public fixed: boolean;
@@ -43,8 +43,7 @@ export class Button implements IButton {
   private accessors: PropAccessor = {};
 
   constructor(props: IButton) {
-    this.props = props;
-    this.color = props.color;
+    this.props = cloneDeep(props);
     this.bottom = props.bottom;
     this.right = props.right;
     this.fixed = props.fixed;
@@ -56,15 +55,23 @@ export class Button implements IButton {
     this.iconRight = props.iconRight;
     this.events = EventFactory.factoryEvents<ButtonEvent>(props.events);
     this.initProp(this.accessors, this.props, 'fab');
+    this.initProp(this.accessors, this.props, 'color');
   }
 
   get fab() {
     return this.accessors.fab.instance[this.accessors.fab.accessor];
   }
 
-  set fab(fab: boolean|string) {
-    this.props.fab = fab;
-    this.initProp(this.accessors, this.props, 'fab');
+  set fab(fab: boolean) {
+    this.accessors.fab.instance[this.accessors.fab.accessor] = fab;
+  }
+
+  get color() {
+    return this.accessors.color.instance[this.accessors.color.accessor];
+  }
+
+  set color(color: string) {
+    this.accessors.color.instance[this.accessors.color.accessor] = color;
   }
 
   public click() {

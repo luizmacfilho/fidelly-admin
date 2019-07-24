@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <component v-for="(child, index) in instance.children"
+    <component v-for="(child, index) in children"
       :key="index" :is="child.is" v-bind="child">
     </component>
   </v-container>
@@ -17,28 +17,5 @@ export default class ZdContainer extends ZdComponent {
 
   @Prop({ default: () => ({}) }) public events!: Events<ContainerEvent>;
   @Prop({ default: () => [] }) public children!: Array<{ [key: string]: any }>;
-
-  public instance!: Container;
-
-  public created() {
-    this.instance = new Container(this.$props as IContainer);
-    super.created();
-  }
-
-  public beforeMount() {
-    super.beforeMount();
-  }
-
-  public mounted() {
-    super.mounted();
-  }
-
-  public beforeDestroy() {
-    super.beforeDestroy();
-  }
-
-  public destroyed() {
-    super.destroyed();
-  }
 }
 </script>

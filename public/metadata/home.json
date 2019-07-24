@@ -1,36 +1,15 @@
 {
   "is": "ZdContainer",
-  "events": {
-    "onCreated": "HomeController.onCreated"
-  },
   "children": [
     {
-      "is": "ZdLayout",
-      "column": true,
-      "children": [
-        {
-          "is": "ZdButton",
-          "color": "error",
-          "label": "Teste",
-          "iconRight": "add",
-          "fab": "HomeController.isFab",
-          "events": {
-            "onCreated": "HomeController.onCreatedButton",
-            "onBeforeMount": "HomeController.onBeforeMount",
-            "onMounted": "HomeController.onMounted",
-            "onBeforeDestroy": "HomeController.onBeforeDestroy",
-            "onDestroyed": "HomeController.onDestroyed",
-            "click": "HomeController.click"
-          }
-        },
-        {
-          "is": "ZdTextField",
-          "label": "Name"
-        },
-        {
-          "is": "ZdFlex"
-        }
-      ]
+      "is": "ZdButton",
+      "label": "Teste",
+      "iconRight": "add",
+      "color": "HomeController.color",
+      "showIcon": "HomeController.showIcon",
+      "events": {
+        "onCreated": "HomeController.onCreatedButton"
+      }
     }
   ]
 }

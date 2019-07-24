@@ -1,28 +1,18 @@
-import { application } from '@/components/Application';
 import { ButtonEvent } from '@/zeedhi-components/base/Button';
 
 export class HomeController {
 
-  private isFab: boolean|string = false;
+  public color: string = 'secondary';
 
-  // get isFab() {
-  //   return this.cIsFab;
-  // }
-
-  // set isFab(isFab: boolean|string) {
-  //   this.cIsFab = isFab;
-  // }
-
-  public onCreated() {
-    application.showMenu = true;
+  public showIcon(i: any) {
+    return this.show;
+    // Math.ceil((Math.random() * i)) % 2 === 0;
   }
 
   public onCreatedButton({ component }: ButtonEvent) {
     // tslint:disable-next-line: no-console
     console.log('onCreated', component);
-    component.color = 'success';
-    component.iconLeft = 'close';
-    component.iconRight = '';
+    setInterval(() => this.interval(), 500);
   }
 
   public onBeforeMount({ component }: ButtonEvent) {
@@ -33,9 +23,6 @@ export class HomeController {
   public onMounted({ component }: ButtonEvent) {
     // tslint:disable-next-line: no-console
     console.log('onMounted', component);
-    setInterval(() => {
-      this.isFab = !this.isFab;
-    }, 1000);
   }
 
   public onBeforeDestroy({ component }: ButtonEvent) {
@@ -51,5 +38,11 @@ export class HomeController {
   public click({ component }: ButtonEvent) {
     // tslint:disable-next-line: no-console
     console.log('clicked', component);
+  }
+
+  private show: boolean = false;
+  private interval() {
+    // this.color = this.color === 'error' ? 'secondary' : 'error';
+    this.show = !this.show;
   }
 }

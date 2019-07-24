@@ -1,36 +1,46 @@
 import Vue from 'vue';
+import { Component as Comp, PropAccessor } from '../base/Component';
+import { Component, Prop } from 'vue-property-decorator';
+import { Events, EventFactory } from '../../zeedhi/event';
 
+@Component
 export default class ZdComponent extends Vue {
 
-  public instance: any = {};
+  @Prop({ default: () => ({}) }) public events!: Events<any>;
+
+  public accessors: PropAccessor = {};
+  public syncProps: string[] = [];
+  public factoredEvents: Events<any> = {};
 
   public created() {
-    if (this.instance.events.onCreated) {
-      this.instance.events.onCreated({ component: this.instance });
+    this.accessors = Comp.initProps(this.$props, this.syncProps);
+    this.factoredEvents = EventFactory.factoryEvents(this.events);
+    if (this.factoredEvents.onCreated) {
+      this.factoredEvents.onCreated({ component: this });
     }
   }
 
   public beforeMount() {
-    if (this.instance.events.onBeforeMount) {
-      this.instance.events.onBeforeMount({ component: this.instance });
+    if (this.factoredEvents.onBeforeMount) {
+      this.factoredEvents.onBeforeMount({ component: this });
     }
   }
 
   public mounted() {
-    if (this.instance.events.onMounted) {
-      this.instance.events.onMounted({ component: this.instance });
+    if (this.factoredEvents.onMounted) {
+      this.factoredEvents.onMounted({ component: this });
     }
   }
 
   public beforeDestroy() {
-    if (this.instance.events.onBeforeDestroy) {
-      this.instance.events.onBeforeDestroy({ component: this.instance });
+    if (this.factoredEvents.onBeforeDestroy) {
+      this.factoredEvents.onBeforeDestroy({ component: this });
     }
   }
 
   public destroyed() {
-    if (this.instance.events.onDestroyed) {
-      this.instance.events.onDestroyed({ component: this.instance });
+    if (this.factoredEvents.onDestroyed) {
+      this.factoredEvents.onDestroyed({ component: this });
     }
   }
 }

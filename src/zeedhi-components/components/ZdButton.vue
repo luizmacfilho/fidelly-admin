@@ -1,31 +1,36 @@
 <template>
   <v-btn
-    @click="instance.click()"
+    ref="button"
+    @click="click($event)"
     v-bind="{
-      color: instance.color,
-      fab: instance.fab,
-      bottom: instance.bottom,
-      right: instance.right,
-      fixed: instance.fixed,
-      left: instance.left,
-      top: instance.top,
+      fab,
+      bottom,
+      right,
+      fixed,
+      left,
+      top,
+      color: syncColor(),
     }">
-    <v-icon left v-if="instance.iconLeft">{{ instance.iconLeft }}</v-icon>
-    {{ instance.label }}
-    <v-icon right v-if="instance.iconRight">{{ instance.iconRight }}</v-icon>
+    <v-icon left v-if="iconLeft">{{ iconLeft }}</v-icon>
+    {{ label }}
+    <v-icon right v-if="iconRight">{{ iconRight }}</v-icon>
+    <template v-for="i in [1, 2, 3, 4]">
+      <v-icon :key="i" right v-if="syncShowIcon(i)">
+        {{ iconRight }}
+        </v-icon>
+    </template>
   </v-btn>
 </template>
 
 <script lang="ts">
 import ZdComponent from './ZdComponent';
-import { Events } from '../../zeedhi/event';
-import { Prop, Component } from 'vue-property-decorator';
+import { Events } from '../../zeedhi/index';
+import { Prop, Component, Watch } from 'vue-property-decorator';
 import { Button, IButton, ButtonEvent } from '../base/Button';
 
 @Component
 export default class ZdButton extends ZdComponent {
 
-  @Prop({ default: () => ({}) }) public events!: Events<ButtonEvent>;
   @Prop({ default: false }) public fab!: boolean|string;
   @Prop({ default: false }) public bottom!: boolean;
   @Prop({ default: false }) public right!: boolean;
@@ -33,32 +38,33 @@ export default class ZdButton extends ZdComponent {
   @Prop({ default: false }) public absolute!: boolean;
   @Prop({ default: false }) public top!: boolean;
   @Prop({ default: false }) public left!: boolean;
+  @Prop({ default: true }) public showIcon!: boolean|string;
   @Prop({ default: '' }) public iconLeft!: string;
   @Prop({ default: '' }) public iconRight!: string;
   @Prop({ default: '' }) public label!: string;
   @Prop({ default: '' }) public color!: string;
+  @Prop({ default: () => ({}) }) public events!: Events<ButtonEvent>;
 
-  public instance!: Button;
+  public syncProps: string[] = ['color', 'showIcon'];
 
-  public created() {
-    this.instance = new Button(this.$props as IButton);
-    super.created();
+  public syncColor() {
+    const accessor = this.accessors.color.instance[this.accessors.color.accessor];
+    if (typeof accessor === 'function') {
+      return accessor.apply(this.accessors.showIcon.instance);
+    }
+    return accessor;
   }
 
-  public beforeMount() {
-    super.beforeMount();
+  public syncShowIcon(i: any) {
+    const accessor: Function = this.accessors.showIcon.instance[this.accessors.showIcon.accessor];
+    if (typeof accessor === 'function') {
+      return accessor.apply(this.accessors.showIcon.instance, [i]);
+    }
+    return accessor;
   }
 
-  public mounted() {
-    super.mounted();
-  }
-
-  public beforeDestroy() {
-    super.beforeDestroy();
-  }
-
-  public destroyed() {
-    super.destroyed();
+  public click(event: Event) {
+    this.$emit('click', event);
   }
 }
 </script>
