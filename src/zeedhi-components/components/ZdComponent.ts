@@ -43,4 +43,8 @@ export default class ZdComponent extends Vue {
       this.factoredEvents.onDestroyed({ component: this });
     }
   }
+
+  public isFunction(value: any) {
+    return value instanceof Function;
+  }
 }

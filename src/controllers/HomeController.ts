@@ -4,9 +4,11 @@ export class HomeController {
 
   public color: string = 'secondary';
 
+  private show: boolean = false;
+
   public showIcon(i: any) {
-    return this.show;
-    // Math.ceil((Math.random() * i)) % 2 === 0;
+    // return this.show;
+    return Math.ceil((Math.random() * i)) % 2 === 0;
   }
 
   public onCreatedButton({ component }: ButtonEvent) {
@@ -40,9 +42,8 @@ export class HomeController {
     console.log('clicked', component);
   }
 
-  private show: boolean = false;
   private interval() {
-    // this.color = this.color === 'error' ? 'secondary' : 'error';
+    this.color = this.color === 'error' ? 'secondary' : 'error';
     this.show = !this.show;
   }
 }

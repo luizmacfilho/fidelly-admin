@@ -48,19 +48,17 @@ export default class ZdButton extends ZdComponent {
   public syncProps: string[] = ['color', 'showIcon'];
 
   public syncColor() {
-    const accessor = this.accessors.color.instance[this.accessors.color.accessor];
-    if (typeof accessor === 'function') {
-      return accessor.apply(this.accessors.showIcon.instance);
-    }
-    return accessor;
+    const accessor: any = this.accessors.color.instance[this.accessors.color.accessor];
+    return this.isFunction(accessor)
+      ? accessor.apply(this.accessors.showIcon.instance)
+      : accessor;
   }
 
   public syncShowIcon(i: any) {
-    const accessor: Function = this.accessors.showIcon.instance[this.accessors.showIcon.accessor];
-    if (typeof accessor === 'function') {
-      return accessor.apply(this.accessors.showIcon.instance, [i]);
-    }
-    return accessor;
+    const accessor: any = this.accessors.showIcon.instance[this.accessors.showIcon.accessor];
+    return this.isFunction(accessor)
+      ? accessor.apply(this.accessors.showIcon.instance, [i])
+      : accessor;
   }
 
   public click(event: Event) {
