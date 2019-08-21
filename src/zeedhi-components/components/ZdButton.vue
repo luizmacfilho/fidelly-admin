@@ -1,65 +1,47 @@
 <template>
   <v-btn
+    v-if="instance.isVisible"
     ref="button"
     @click="click($event)"
     v-bind="{
-      fab,
-      bottom,
-      right,
-      fixed,
-      left,
-      top,
-      color: syncColor(),
+      fab: instance.fab,
+      bottom: instance.bottom,
+      right: instance.right,
+      fixed: instance.fixed,
+      left: instance.left,
+      top: instance.top,
+      color: instance.color,
     }">
-    <v-icon left v-if="iconLeft">{{ iconLeft }}</v-icon>
-    {{ label }}
-    <v-icon right v-if="iconRight">{{ iconRight }}</v-icon>
-    <template v-for="i in [1, 2, 3, 4]">
-      <v-icon :key="i" right v-if="syncShowIcon(i)">
-        {{ iconRight }}
-        </v-icon>
-    </template>
+    {{ instance.label }}
   </v-btn>
 </template>
 
 <script lang="ts">
-import ZdComponent from './ZdComponent';
+import ZdComponent, { PropWatch } from './ZdComponent';
 import { Events } from '../../zeedhi/index';
-import { Prop, Component, Watch } from 'vue-property-decorator';
-import { Button, IButton, ButtonEvent } from '../base/Button';
+import { Prop, Component } from 'vue-property-decorator';
+import { Button, ButtonEvent } from '../base/Button';
 
 @Component
 export default class ZdButton extends ZdComponent {
 
-  @Prop({ default: false }) public fab!: boolean|string;
-  @Prop({ default: false }) public bottom!: boolean;
-  @Prop({ default: false }) public right!: boolean;
-  @Prop({ default: false }) public fixed!: boolean;
-  @Prop({ default: false }) public absolute!: boolean;
-  @Prop({ default: false }) public top!: boolean;
-  @Prop({ default: false }) public left!: boolean;
-  @Prop({ default: true }) public showIcon!: boolean|string;
-  @Prop({ default: '' }) public iconLeft!: string;
-  @Prop({ default: '' }) public iconRight!: string;
-  @Prop({ default: '' }) public label!: string;
-  @Prop({ default: '' }) public color!: string;
+  @PropWatch({ default: false }) public fab!: boolean|string;
+  @PropWatch({ default: false }) public bottom!: boolean;
+  @PropWatch({ default: false }) public right!: boolean;
+  @PropWatch({ default: false }) public fixed!: boolean;
+  @PropWatch({ default: false }) public absolute!: boolean;
+  @PropWatch({ default: false }) public top!: boolean;
+  @PropWatch({ default: false }) public left!: boolean;
+  @PropWatch({ default: true }) public showIcon!: boolean|string;
+  @PropWatch({ default: true }) public isVisible!: boolean|string;
+  @PropWatch({ default: '' }) public iconLeft!: string;
+  @PropWatch({ default: '' }) public iconRight!: string;
+  @PropWatch({ default: '' }) public label!: string;
+  @PropWatch({ default: '' }) public color!: string;
   @Prop({ default: () => ({}) }) public events!: Events<ButtonEvent>;
 
-  public syncProps: string[] = ['color', 'showIcon'];
-
-  public syncColor() {
-    const accessor: any = this.accessors.color.instance[this.accessors.color.accessor];
-    return this.isFunction(accessor)
-      ? accessor.apply(this.accessors.showIcon.instance)
-      : accessor;
-  }
-
-  public syncShowIcon(i: any) {
-    const accessor: any = this.accessors.showIcon.instance[this.accessors.showIcon.accessor];
-    return this.isFunction(accessor)
-      ? accessor.apply(this.accessors.showIcon.instance, [i])
-      : accessor;
-  }
+  public instanceType: typeof Button = Button;
+  public instance!: Button;
 
   public click(event: Event) {
     this.$emit('click', event);

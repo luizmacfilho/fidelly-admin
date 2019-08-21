@@ -14,7 +14,7 @@ export default new Router({
     },
     {
       path: '/',
-      name: 'home',
+      name: 'asdf',
       component: () => import(/* webpackChunkName: "home" */ './views/Home.vue'),
     },
     {

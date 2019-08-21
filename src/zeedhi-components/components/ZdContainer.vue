@@ -9,7 +9,7 @@
 <script lang="ts">
 import ZdComponent from './ZdComponent';
 import { Prop, Component } from 'vue-property-decorator';
-import { Container, IContainer, ContainerEvent } from '../base/Container';
+import { Container, ContainerEvent } from '../base/Container';
 import { Events } from '../../zeedhi/event';
 
 @Component
@@ -17,5 +17,8 @@ export default class ZdContainer extends ZdComponent {
 
   @Prop({ default: () => ({}) }) public events!: Events<ContainerEvent>;
   @Prop({ default: () => [] }) public children!: Array<{ [key: string]: any }>;
+
+  public instanceType: typeof Container = Container;
+  public instance!: Container;
 }
 </script>

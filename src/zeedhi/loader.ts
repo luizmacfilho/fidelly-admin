@@ -3,27 +3,31 @@
  */
 export class Loader {
 
-  public static setControllers(controllers: { [key: string]: any }) {
-    this.controllers = controllers;
-  }
-
-  public static getInstance(name: string) {
-    if (!this.controllers[name]) {
-      throw new Error(`Controller ${name} not found`);
-    }
-    if (!this.instances[name]) {
-      this.instances[name] = new (this.controllers[name])();
-    }
-    return this.instances[name];
-  }
-
-  public static clearInstances() {
-    this.instances = {};
-  }
-
   /**
    * Loaded controllers
    */
   private static controllers: any = {};
   private static instances: any = {};
+
+  // tslint:disable-next-line: member-ordering
+  public static setControllers(controllers: { [key: string]: any }) {
+    this.controllers = controllers;
+  }
+
+  // tslint:disable-next-line: member-ordering
+  public static getInstance(name: string) {
+    const controller = this.controllers[name];
+    if (!controller) {
+      throw new Error(`Controller ${name} not found`);
+    }
+    if (!this.instances[name]) {
+      this.instances[name] = new (controller)();
+    }
+    return this.instances[name];
+  }
+
+  // tslint:disable-next-line: member-ordering
+  public static clearInstances() {
+    this.instances = {};
+  }
 }
