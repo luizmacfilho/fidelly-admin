@@ -14,11 +14,6 @@ export default new Router({
     },
     {
       path: '/',
-      name: 'asdf',
-      component: () => import(/* webpackChunkName: "home" */ './views/Home.vue'),
-    },
-    {
-      path: '/login',
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ './views/Login.vue'),
     },
@@ -41,15 +36,6 @@ export default new Router({
       path: '/store',
       name: 'store',
       component: () => import(/* webpackChunkName: "store" */ './views/Store.vue'),
-    },
-    {
-      path: '/home',
-      name: 'home',
-      component: () => import(/* webpackChunkName: "store" */ './zeedhi-components/components/ZdPage.vue'),
-      props: {
-        name: 'home',
-        local: true,
-      },
     },
   ],
 });

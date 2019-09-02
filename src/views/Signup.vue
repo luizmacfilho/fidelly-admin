@@ -3,27 +3,23 @@
     <v-container fluid class="signup__container">
       <v-layout row wrap class="signup__content">
         <v-flex xs12 sm6>
-          <v-text-field :label="$t('message.first_name')" validate-on-blur :rules="rules.name"></v-text-field>
+          <v-text-field :label="$t('message.first_name')" :rules="rules.name"></v-text-field>
         </v-flex>
         <v-flex xs12 sm6>
-          <v-text-field :label="$t('message.last_name')" validate-on-blur :rules="rules.name"></v-text-field>
+          <v-text-field :label="$t('message.last_name')" :rules="rules.name"></v-text-field>
+        </v-flex>
+        <v-flex xs12>
+          <v-text-field type="email" :label="$t('message.email')" :rules="rules.email"></v-text-field>
         </v-flex>
         <v-flex xs12 sm6>
-          <v-text-field type="email" :label="$t('message.email')" validate-on-blur :rules="rules.email"></v-text-field>
+          <v-text-field type="password" :label="$t('message.password')" :rules="rules.password"></v-text-field>
         </v-flex>
         <v-flex xs12 sm6>
-          <v-text-field type="tel" :label="$t('message.cnpj')" validate-on-blur></v-text-field>
+          <v-text-field type="password" :label="$t('message.confirm_password')" :rules="rules.password"></v-text-field>
         </v-flex>
-        <v-flex xs12 sm6>
-          <v-text-field type="password" :label="$t('message.password')" validate-on-blur :rules="rules.password"></v-text-field>
-        </v-flex>
-        <v-flex xs12 sm6>
-          <v-text-field type="password" :label="$t('message.confirm_password')" validate-on-blur :rules="rules.password"></v-text-field>
-        </v-flex>
-        <v-layout justify-space-between class="signup__buttons">
-          <v-spacer></v-spacer>
+        <v-flex xs12 sm4 offset-sm4 class="signup__buttons">
           <v-btn color="primary">{{ $t('message.create_account') }}</v-btn>
-        </v-layout>
+        </v-flex>
         <div class="signup__login">
           <span class="signup__login__separator"></span>
           <span class="signup__login__text">
@@ -74,10 +70,8 @@ export default class SignUp extends Vue {
   }
 
   &__buttons {
-    padding: 0 8px;
-
-    > a, > button {
-      margin: auto 0;
+    > button {
+      width: 100%;
     }
   }
 

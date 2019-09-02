@@ -6,7 +6,6 @@ import VueI18n from 'vue-i18n';
 import { messages } from './messages';
 import './registerServiceWorker';
 import './plugins';
-import './zeedhi';
 
 Vue.config.productionTip = false;
 
