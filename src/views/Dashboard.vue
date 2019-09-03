@@ -18,5 +18,11 @@ import { application, IApplication } from '../components/Application';
 export default class Dashboard extends Vue {
 
   public application!: IApplication;
+
+  constructor() {
+    super();
+    this.application = application;
+    this.application.showMenu = true;
+  }
 }
 </script>

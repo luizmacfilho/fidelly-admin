@@ -5,6 +5,7 @@ import store from './store';
 import VueI18n from 'vue-i18n';
 import { messages } from './messages';
 import './registerServiceWorker';
+import './firebase';
 import './plugins';
 
 Vue.config.productionTip = false;
