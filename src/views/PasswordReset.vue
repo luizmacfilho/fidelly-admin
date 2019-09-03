@@ -2,13 +2,13 @@
   <v-form v-model="valid" class="password-reset">
     <v-container fluid class="password-reset__container">
       <v-layout row wrap class="password-reset__content">
-        <span class="password-reset__message">{{ $t('message.password_reset_message')}}</span>
+        <span class="password-reset__message">{{ $t('message.passwordResetMessage')}}</span>
         <v-flex xs12 sm12>
           <v-text-field :label="$t('message.email')" validate-on-blur :rules="rules.email"></v-text-field>
         </v-flex>
         <v-layout justify-space-between class="password-reset__buttons">
           <v-spacer />
-          <v-btn color="primary">{{ $t('message.send_email') }}</v-btn>
+          <v-btn color="primary">{{ $t('message.sendEmail') }}</v-btn>
         </v-layout>
       </v-layout>
     </v-container>
@@ -25,8 +25,8 @@ export default class PasswordReset extends Vue {
   public application: IApplication;
   public valid: boolean = false;
   public rules = {
-    email: [(value: string) => !!value || (window as any).$i18n.t('message.enter_email')],
-    password: [(value: string) => !!value || (window as any).$i18n.t('message.enter_password')],
+    email: [(value: string) => !!value || (window as any).$i18n.t('message.enterEmail')],
+    password: [(value: string) => !!value || (window as any).$i18n.t('message.enterPassword')],
   };
 
   constructor() {

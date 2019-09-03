@@ -9,13 +9,13 @@
       <v-container fluid class="store__container">
         <v-layout row wrap class="store__content">
           <v-flex xs12 sm6>
-            <v-text-field :label="$t('message.store_name')" validate-on-blur></v-text-field>
+            <v-text-field :label="$t('message.storeName')" validate-on-blur></v-text-field>
           </v-flex>
           <v-flex xs12 sm6>
             <v-text-field type="tel" :label="$t('message.cnpj')" validate-on-blur></v-text-field>
           </v-flex>
           <v-flex xs12 sm6>
-            <v-text-field type="tel" :label="$t('message.phone_number')" validate-on-blur></v-text-field>
+            <v-text-field type="tel" :label="$t('message.phoneNumber')" validate-on-blur></v-text-field>
           </v-flex>
           <v-flex xs12 sm6>
             <v-text-field type="text" :label="$t('message.category')" validate-on-blur></v-text-field>

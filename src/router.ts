@@ -3,13 +3,13 @@ import Router from 'vue-router';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
       path: '*',
-      name: 'not_found',
+      name: 'notFound',
       component: () => import(/* webpackChunkName: "not_found" */ './components/404.vue'),
     },
     {
@@ -23,9 +23,9 @@ export default new Router({
       component: () => import(/* webpackChunkName: "signup" */ './views/Signup.vue'),
     },
     {
-      path: '/password_reset',
-      name: 'password_reset',
-      component: () => import(/* webpackChunkName: "password_reset" */ './views/PasswordReset.vue'),
+      path: '/password-reset',
+      name: 'passwordReset',
+      component: () => import(/* webpackChunkName: "passwordReset" */ './views/PasswordReset.vue'),
     },
     {
       path: '/dashboard',
@@ -39,3 +39,5 @@ export default new Router({
     },
   ],
 });
+
+export default router;
