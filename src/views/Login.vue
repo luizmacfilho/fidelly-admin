@@ -1,9 +1,9 @@
 <template>
-  <v-form v-model="valid" ref="form" class="login" @submit.prevent="signin()">
+  <v-form v-if="!$store.state.user" v-model="valid" ref="form" class="login" @submit.prevent="signin()">
     <v-container fluid class="login__container">
       <v-layout row wrap class="login__content">
         <v-flex sm12>
-          <v-text-field :error-messages="error" @focus="error = ''" v-model="formValue.email" :label="$t('message.email')" validate-on-blur :rules="rules.email"></v-text-field>
+          <v-text-field :error-messages="error" @focus="error = ''" v-model="formValue.email" type="email" :label="$t('message.email')" validate-on-blur :rules="rules.email"></v-text-field>
         </v-flex>
         <v-flex sm12>
           <v-text-field v-model="formValue.password" type="password" :label="$t('message.password')" validate-on-blur :rules="rules.password"></v-text-field>

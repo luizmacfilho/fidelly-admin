@@ -1,9 +1,17 @@
 <template>
   <v-app id="app">
-    <Sidenav />
-    <v-content>
+    <Sidenav v-if="$store.state.user"/>
+    <v-content v-if="$store.state.initialized">
       <router-view />
     </v-content>
+    <div class="overlay" v-if="!$store.state.initialized">
+      <v-progress-circular
+        class="overlay__progress"
+        indeterminate
+        color="primary"
+        size="64"
+      ></v-progress-circular>
+    </div>
   </v-app>
 </template>
 
@@ -21,6 +29,19 @@ export default class App extends Vue {}
 <style lang="scss" scoped>
 .v-content[data-booted=true] {
   transition: none;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+
+  &__progress {
+    margin: auto;
+  }
 }
 </style>
 

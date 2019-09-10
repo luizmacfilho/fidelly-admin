@@ -1,5 +1,5 @@
 <template>
-  <div class="store">
+  <div class="store" v-if="$store.state.user">
     <v-toolbar app fixed clipped-left>
       <v-toolbar-side-icon @click.stop="application.toggleMenu()"></v-toolbar-side-icon>
       <v-toolbar-title>{{ $t('message.store') }}</v-toolbar-title>
