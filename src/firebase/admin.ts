@@ -9,7 +9,7 @@ import { Route } from 'vue-router';
 firebase.initializeApp(adminConfig);
 
 let guardInitialized = false;
-const routesWithoutSession = ['/', '/signup', '/password-reset'];
+const routesWithoutSession = ['/login', '/signup', '/password-reset'];
 
 firebase.auth().onAuthStateChanged((user) => {
   checkUserSession(user);
@@ -31,11 +31,11 @@ function checkUserSession(user: firebase.User|null, route?: Route) {
   let change = false;
   if (user) {
     if (shouldRedirectToDashboard(route)) {
-      router.push('/dashboard');
+      router.push('/');
       change = true;
     }
   } else if (!shouldRedirectToDashboard(route)) {
-    router.push('/');
+    router.push('/login');
     change = true;
   }
   return change;

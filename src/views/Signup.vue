@@ -114,7 +114,7 @@ export default class SignUp extends Vue {
       user.updateProfile({
         displayName: `${this.formValue.firstName} ${this.formValue.lastName}`,
       });
-      router.replace('/dashboard');
+      router.replace('/');
     } catch (error) {
       this.emailError = error.code === 'auth/email-already-in-use'
           ? (window as any).$i18n.t('message.emailInUse')

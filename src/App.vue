@@ -1,6 +1,11 @@
 <template>
   <v-app id="app">
     <Sidenav v-if="$store.state.user"/>
+    <v-toolbar v-if="$store.state.user" app fixed clipped-left>
+      <v-toolbar-side-icon @click.stop="application.toggleMenu()"></v-toolbar-side-icon>
+      <v-toolbar-title>{{ $t('message.dashboard') }}</v-toolbar-title>
+      <v-spacer></v-spacer>
+    </v-toolbar>
     <v-content v-if="$store.state.initialized">
       <router-view />
     </v-content>
@@ -19,11 +24,20 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import Sidenav from './components/Sidenav.vue';
+import { IApplication, application } from './components/Application';
 
 @Component({
   components: { Sidenav },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  public application!: IApplication;
+
+  constructor() {
+    super();
+    this.application = application;
+    this.application.showMenu = true;
+  }
+}
 </script>
 
 <style lang="scss" scoped>

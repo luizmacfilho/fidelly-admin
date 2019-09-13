@@ -3,6 +3,7 @@ import Vuetify from 'vuetify';
 import VueI18n from 'vue-i18n';
 import 'vuetify/dist/vuetify.min.css';
 import '@mdi/font/css/materialdesignicons.css';
+import 'typeface-roboto/index.css';
 
 Vue.use(Vuetify, {
   iconfont: 'mdi',

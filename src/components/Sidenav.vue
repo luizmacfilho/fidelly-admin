@@ -1,11 +1,11 @@
 <template>
-  <v-navigation-drawer v-if="application.showMenu" v-model="application.menuOpened" app fixed clipped>
+  <v-navigation-drawer v-if="application.showMenu" v-model="application.menuOpened" app clipped>
     <v-list class="pt-2 pb-2">
       <v-list-tile
         v-for="item in items"
         :key="item.title"
         :to="item.to"
-        @click="item.click()"
+        @click="item.click && item.click()"
       >
         <v-list-tile-action>
           <v-icon>{{ item.icon }}</v-icon>
@@ -31,13 +31,13 @@ export default class Sidenav extends Vue {
 
   public application: IApplication;
   public items: Array<{ icon: string; title: string, to?: string, click?: () => void }> = [
-    { icon: 'dashboard', title: (window as any).$i18n.t('message.dashboard'), to: '/dashboard' },
-    { icon: 'star ', title: 'Fidelly', to: '/fidelly' },
-    { icon: 'people', title: (window as any).$i18n.t('message.clients'), to: '/clients' },
-    { icon: 'bar_chart', title: (window as any).$i18n.t('message.reports'), to: '/reports' },
-    { icon: 'store_mall_directory', title: (window as any).$i18n.t('message.myStore'), to: '/store' },
-    { icon: 'bug_report', title: (window as any).$i18n.t('message.feedback'), to: '/feedback' },
-    { icon: 'logout', title: (window as any).$i18n.t('message.logout'), click: () => this.singOut() },
+    { icon: 'mdi-view-dashboard', title: (window as any).$i18n.t('message.dashboard'), to: '/' },
+    { icon: 'mdi-star ', title: 'Fidelly', to: '/fidelly' },
+    { icon: 'mdi-account-group', title: (window as any).$i18n.t('message.clients'), to: '/clients' },
+    { icon: 'mdi-chart-bar', title: (window as any).$i18n.t('message.reports'), to: '/reports' },
+    { icon: 'mdi-store', title: (window as any).$i18n.t('message.myStore'), to: '/store' },
+    { icon: 'mdi-bug', title: (window as any).$i18n.t('message.feedback'), to: '/feedback' },
+    { icon: 'mdi-logout', title: (window as any).$i18n.t('message.logout'), click: () => this.singOut() },
   ];
 
   constructor() {
@@ -52,7 +52,7 @@ export default class Sidenav extends Vue {
   private async singOut() {
     await firebase.auth().signOut();
     this.updateMenuOpened();
-    router.push('/');
+    router.push('/login');
   }
 
   private updateMenuOpened() {

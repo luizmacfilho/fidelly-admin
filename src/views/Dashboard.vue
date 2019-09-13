@@ -1,13 +1,6 @@
 <template>
-  <div class="dashboard" v-if="$store.state.user">
-    <v-toolbar app fixed clipped-left>
-      <v-toolbar-side-icon @click.stop="application.toggleMenu()"></v-toolbar-side-icon>
-      <v-toolbar-title>{{ $t('message.dashboard') }}</v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-toolbar>
-    <v-container class="dashboard__container" fluid>
-    </v-container>
-  </div>
+  <v-container class="dashboard__container" fluid>
+  </v-container>
 </template>
 
 <script lang="ts">

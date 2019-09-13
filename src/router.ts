@@ -13,7 +13,7 @@ const router = new Router({
       component: () => import(/* webpackChunkName: "not_found" */ './components/404.vue'),
     },
     {
-      path: '/',
+      path: '/login',
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ './views/Login.vue'),
     },
@@ -28,7 +28,7 @@ const router = new Router({
       component: () => import(/* webpackChunkName: "passwordReset" */ './views/PasswordReset.vue'),
     },
     {
-      path: '/dashboard',
+      path: '/',
       name: 'dashboard',
       component: () => import(/* webpackChunkName: "dashboard" */ './views/Dashboard.vue'),
     },
