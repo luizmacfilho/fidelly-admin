@@ -17,5 +17,9 @@ export default class Dashboard extends Vue {
     this.application = application;
     this.application.showMenu = true;
   }
+
+  public created() {
+    this.$store.commit('title', 'message.dashboard');
+  }
 }
 </script>

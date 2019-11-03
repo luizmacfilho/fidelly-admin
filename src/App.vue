@@ -1,9 +1,9 @@
 <template>
   <v-app id="app">
     <Sidenav v-if="$store.state.user"/>
-    <v-toolbar v-if="$store.state.user" app fixed clipped-left>
+    <v-toolbar class="toolbar-app" color="primary" light v-if="$store.state.user" app fixed clipped-left>
       <v-toolbar-side-icon @click.stop="application.toggleMenu()"></v-toolbar-side-icon>
-      <v-toolbar-title>{{ $t('message.dashboard') }}</v-toolbar-title>
+      <v-toolbar-title>{{ $t($store.state.title) }}</v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
     <v-content v-if="$store.state.initialized">
@@ -55,6 +55,14 @@ export default class App extends Vue {
 
   &__progress {
     margin: auto;
+  }
+}
+
+.toolbar-app.v-toolbar {
+  color: white;
+
+  button {
+    color: white;
   }
 }
 </style>

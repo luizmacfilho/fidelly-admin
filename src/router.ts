@@ -37,6 +37,11 @@ const router = new Router({
       name: 'store',
       component: () => import(/* webpackChunkName: "store" */ './views/Store.vue'),
     },
+    {
+      path: '/fidelly',
+      name: 'fidelly',
+      component: () => import(/* webpackChunkName: "fidelly" */ './views/Fidelly.vue'),
+    },
   ],
 });
 

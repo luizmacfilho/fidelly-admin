@@ -34,9 +34,9 @@ export default class Sidenav extends Vue {
     { icon: 'mdi-view-dashboard', title: (window as any).$i18n.t('message.dashboard'), to: '/' },
     { icon: 'mdi-star ', title: 'Fidelly', to: '/fidelly' },
     { icon: 'mdi-account-group', title: (window as any).$i18n.t('message.clients'), to: '/clients' },
-    { icon: 'mdi-chart-bar', title: (window as any).$i18n.t('message.reports'), to: '/reports' },
+    // { icon: 'mdi-chart-bar', title: (window as any).$i18n.t('message.reports'), to: '/reports' },
     { icon: 'mdi-store', title: (window as any).$i18n.t('message.myStore'), to: '/store' },
-    { icon: 'mdi-bug', title: (window as any).$i18n.t('message.feedback'), to: '/feedback' },
+    // { icon: 'mdi-bug', title: (window as any).$i18n.t('message.feedback'), to: '/feedback' },
     { icon: 'mdi-logout', title: (window as any).$i18n.t('message.logout'), click: () => this.singOut() },
   ];
 

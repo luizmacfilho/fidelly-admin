@@ -18,7 +18,7 @@
           <v-text-field :append-icon="getPasswordIcon(confirmPasswordEyeOn)" @click:append="confirmPasswordEyeOn = !confirmPasswordEyeOn" v-model="formValue.confirm_password" :type="getPasswordType(confirmPasswordEyeOn)" :label="$t('message.confirmPassword')" :rules="rules.confirm_password"></v-text-field>
         </v-flex>
         <v-flex xs12 sm4 offset-sm4 class="signup__buttons">
-          <v-btn @click="signup()" :loading="loading" color="primary" type="submit">{{ $t('message.createAccount') }}</v-btn>
+          <v-btn block :loading="loading" color="primary" type="submit">{{ $t('message.createAccount') }}</v-btn>
         </v-flex>
         <div class="signup__login">
           <span class="signup__login__separator"></span>
@@ -137,12 +137,6 @@ export default class SignUp extends Vue {
   &__content {
     height: 100%;
     margin: auto;
-  }
-
-  &__buttons {
-    > button {
-      width: 100%;
-    }
   }
 
   &__login {

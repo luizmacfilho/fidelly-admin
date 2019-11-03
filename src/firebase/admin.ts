@@ -2,11 +2,13 @@ import * as firebase from 'firebase/app';
 import { adminConfig } from '@/firebase';
 import router from '@/router';
 import 'firebase/auth';
+import 'firebase/firestore';
 import store from '@/store';
 import { Route } from 'vue-router';
 
 // Initialize Firebase
 firebase.initializeApp(adminConfig);
+export const db = firebase.firestore();
 
 let guardInitialized = false;
 const routesWithoutSession = ['/login', '/signup', '/password-reset'];
