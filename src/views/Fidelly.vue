@@ -14,7 +14,7 @@
 
       <v-tabs-items v-model="active" touchless>
         <v-tab-item class="tab" :transition="false" :reverse-transition="false">
-          <div>
+          <div v-if="false">
             <div class="number">
               <span>(</span>
               <span class="digit">{{ getDigit(0) }}</span>
@@ -60,13 +60,26 @@
               Ganhar selo
             </v-btn>
           </div>
+          <v-form ref="form" class="login">
+            <v-container fluid class="login__container">
+              <v-layout column wrap class="login__content">
+                <v-flex sm12>
+                  <v-text-field type="email" :label="$t('message.email')" validate-on-blur></v-text-field>
+                </v-flex>
+                <v-layout justify-space-between class="login__buttons">
+                  <v-btn type="submit" block color="primary">Ganhar selo</v-btn>
+                </v-layout>
+              </v-layout>
+              <slot></slot>
+            </v-container>
+          </v-form>
         </v-tab-item>
 
         <v-tab-item :transition="false" :reverse-transition="false">
           <Auth @auth:submit="getAward($event)" :error="error" :loading="loading" label="Resgatar recompensa" block>
             <template v-slot:form>
               <v-flex sm12>
-                <v-select></v-select>
+                <v-select label="Escolha sua recompensa"></v-select>
               </v-flex>
             </template>
           </Auth>
@@ -175,6 +188,29 @@ export default class Fidelly extends Vue {
 
   .backspace i {
     color: white;
+  }
+}
+
+.login {
+  display: flex;
+  height: 100%;
+  width: 100%;
+
+  &__container.fluid {
+    max-width: 350px;
+  }
+
+  &__content {
+    height: 100%;
+    margin: auto;
+  }
+
+  &__buttons {
+    padding: 0 8px;
+
+    > a, > button {
+      margin: auto 0;
+    }
   }
 }
 </style>

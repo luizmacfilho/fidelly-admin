@@ -49,8 +49,7 @@ export default class Login extends Vue {
       await firebase.auth().signInWithEmailAndPassword(value.email, value.password);
       router.push('/');
     } catch (error) {
-      this.error = 'Email or password does not match';
-      // console.log(error);
+      this.error = 'E-mail ou senha inválidos';
     } finally {
       this.loading = false;
     }
