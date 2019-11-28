@@ -172,9 +172,9 @@ export default class Fidelly extends Vue {
 
   public async created() {
     this.$store.commit('title', 'Fidelly');
-    const userId = this.$store.state.user.uid;
-    const storeRef = db.collection('store').doc(userId);
-    const awards = await storeRef.collection('awards').get();
+    const userId: any = this.$store.state.user.uid;
+    const storeRef: any = db.collection('store').doc(userId);
+    const awards: any = await storeRef.collection('awards').get();
     let remaining = -1;
     awards.forEach((doc: any) => {
       this.awards.push({
@@ -211,22 +211,22 @@ export default class Fidelly extends Vue {
       try {
         const res = await mobile.auth().fetchSignInMethodsForEmail(this.email);
         if (res.length) {
-          const userId = this.$store.state.user.uid;
-          const storeRef = db.collection('store').doc(userId);
-          const store = await storeRef.get();
-          const storeId = store.id;
-          const doc = await mobileDB.collection('users').doc(this.email).get();
-          const cards = await mobileDB.collection('cards').doc(doc.data().id).collection('cards').get();
-          let card = null;
+          const userId: any = this.$store.state.user.uid;
+          const storeRef: any = db.collection('store').doc(userId);
+          const store: any = await storeRef.get();
+          const storeId: any = store.id;
+          const doc: any = await mobileDB.collection('users').doc(this.email).get();
+          const cards: any = await mobileDB.collection('cards').doc(doc.data().id).collection('cards').get();
+          let card: any = null;
           cards.forEach((doc: any) => {
             if (doc.data().storeId === storeId) {
               card = { id: doc.id, ...doc.data() };
             }
           });
-          const awards = await storeRef.collection('awards').get();
-          let remaining = -1;
+          const awards: any = await storeRef.collection('awards').get();
+          let remaining: any = -1;
           awards.forEach((doc: any) => {
-            const amount = doc.data().amount;
+            const amount: any = doc.data().amount;
             if (remaining === -1 || amount < remaining) {
               remaining = amount;
             }
@@ -278,13 +278,13 @@ export default class Fidelly extends Vue {
     this.loading = true;
     try {
       await mobile.auth().signInWithEmailAndPassword(value.email, value.password);
-      const userId = this.$store.state.user.uid;
-      const storeRef = db.collection('store').doc(userId);
-      const store = await storeRef.get();
-      const storeId = store.id;
-      const doc = await mobileDB.collection('users').doc(value.email).get();
-      const cards = await mobileDB.collection('cards').doc(doc.data().id).collection('cards').get();
-      let card = null;
+      const userId: any = this.$store.state.user.uid;
+      const storeRef: any = db.collection('store').doc(userId);
+      const store: any = await storeRef.get();
+      const storeId: any = store.id;
+      const doc: any = await mobileDB.collection('users').doc(value.email).get();
+      const cards: any = await mobileDB.collection('cards').doc(doc.data().id).collection('cards').get();
+      let card: any = null;
       cards.forEach((doc: any) => {
         if (doc.data().storeId === storeId) {
           card = { id: doc.id, ...doc.data() };
