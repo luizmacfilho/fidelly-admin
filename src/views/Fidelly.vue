@@ -12,7 +12,7 @@
         Resgatar Recompensa
       </v-tab>
 
-      <v-tabs-items v-model="active" touchless>
+      <v-tabs-items v-model="active" touchless @change="reset()">
         <v-tab-item class="tab" :transition="false" :reverse-transition="false">
           <div v-if="false">
             <div class="number">
@@ -60,14 +60,14 @@
               Ganhar selo
             </v-btn>
           </div>
-          <v-form ref="form" class="login">
+          <v-form ref="form" class="login" @submit.prevent="sendBadge()">
             <v-container fluid class="login__container">
               <v-layout column wrap class="login__content">
                 <v-flex sm12>
-                  <v-text-field type="email" :label="$t('message.email')" validate-on-blur></v-text-field>
+                  <v-text-field type="email" :label="$t('message.email')" v-model="email" :rules="rules.email" validate-on-blur></v-text-field>
                 </v-flex>
                 <v-layout justify-space-between class="login__buttons">
-                  <v-btn type="submit" block color="primary">Ganhar selo</v-btn>
+                  <v-btn :loading="loading" type="submit" block color="primary">Ganhar selo</v-btn>
                 </v-layout>
               </v-layout>
               <slot></slot>
@@ -76,16 +76,64 @@
         </v-tab-item>
 
         <v-tab-item :transition="false" :reverse-transition="false">
-          <Auth @auth:submit="getAward($event)" :error="error" :loading="loading" label="Resgatar recompensa" block>
+          <Auth @auth:submit="getAward($event)" :error="error" :loading="loading" label="Resgatar recompensa" block ref="auth">
             <template v-slot:form>
               <v-flex sm12>
-                <v-select label="Escolha sua recompensa"></v-select>
+                <v-select label="Escolha sua recompensa"
+                  :items="awards"
+                  item-value="id"
+                  item-text="name"
+                  validate-on-blur
+                  :rules="rules.select"
+                  return-object
+                  v-model="selectedAward"
+                  ></v-select>
               </v-flex>
             </template>
           </Auth>
         </v-tab-item>
       </v-tabs-items>
     </v-tabs>
+    <v-snackbar
+      top
+      v-model="snackbar.show"
+    >
+      {{ snackbar.text }}
+      <v-btn
+        color="pink"
+        flat
+        @click="snackbar.show = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
+    <v-dialog
+      v-model="errorDialog.show"
+      width="500">
+      <v-card>
+        <v-card-title
+          class="headline"
+          primary-title
+          >
+          <v-icon class="pr-2" color="error">mdi-close-circle</v-icon>
+          {{ errorDialog.title }}
+        </v-card-title>
+
+        <v-card-text>
+          {{ errorDialog.text }}
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            @click="errorDialog.show = false"
+          >
+            Entendi
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -93,6 +141,8 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import Auth from '@/components/Auth.vue';
+import firebase from 'firebase/app';
+import { mobileDB, db, mobile } from '../firebase/admin';
 
 @Component({
   components: { Auth },
@@ -102,9 +152,36 @@ export default class Fidelly extends Vue {
   public number: string[] = [];
   public error: string = '';
   public loading: boolean = false;
+  public email: string = '';
+  public snackbar: any = { show: false, text: '' };
+  public awards: any = [];
+  public selectedAward: any = {};
+  public errorDialog: any = { show: false };
+  public rules = {
+    email: [
+      (value: string) => !!value || (window as any).$i18n.t('message.enterEmail'),
+      (value: string) => {
+        const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return regex.test(value) || (window as any).$i18n.t('message.enterValidEmail');
+      },
+    ],
+    select: [
+      (value: string) => !!value || 'Selecione uma recompensa',
+    ]
+  };
 
-  public created() {
+  public async created() {
     this.$store.commit('title', 'Fidelly');
+    const userId = this.$store.state.user.uid;
+    const storeRef = db.collection('store').doc(userId);
+    const awards = await storeRef.collection('awards').get();
+    let remaining = -1;
+    awards.forEach((doc: any) => {
+      this.awards.push({
+        ...doc.data(),
+        id: doc.id,
+      });
+    });
   }
 
   public getDigit(position: number) {
@@ -123,8 +200,128 @@ export default class Fidelly extends Vue {
     }
   }
 
-  public getAward() {
+  public reset() {
+    (this.$refs.form as any).reset();
+    (this.$refs.auth as any).reset();
+  }
 
+  public async sendBadge() {
+    if ((this.$refs.form as any).validate()) {
+      this.loading = true;
+      try {
+        const res = await mobile.auth().fetchSignInMethodsForEmail(this.email);
+        if (res.length) {
+          const userId = this.$store.state.user.uid;
+          const storeRef = db.collection('store').doc(userId);
+          const store = await storeRef.get();
+          const storeId = store.id;
+          const doc = await mobileDB.collection('users').doc(this.email).get();
+          const cards = await mobileDB.collection('cards').doc(doc.data().id).collection('cards').get();
+          let card = null;
+          cards.forEach((doc: any) => {
+            if (doc.data().storeId === storeId) {
+              card = { id: doc.id, ...doc.data() };
+            }
+          });
+          const awards = await storeRef.collection('awards').get();
+          let remaining = -1;
+          awards.forEach((doc: any) => {
+            const amount = doc.data().amount;
+            if (remaining === -1 || amount < remaining) {
+              remaining = amount;
+            }
+          });
+          if (card) {
+            await mobileDB.collection('cards').doc(doc.data().id).collection('cards').doc(card.id).update({
+              amount: card.amount + 1,
+              name: store.data().name,
+              remaining: remaining - (card.amount + 1),
+            });
+            await mobileDB.collection('users').doc(this.email).update({
+              ['stores.'+storeId]: true,
+            })
+          } else {
+            await mobileDB.collection('cards').doc(doc.data().id).collection('cards').add({
+              storeId, remaining: remaining - 1, name: store.data().name, amount: 1,
+            });
+            await mobileDB.collection('users').doc(this.email).update({
+              ['stores.'+storeId]: true,
+            })
+          }
+        } else {
+          await (window as any).Email.send({
+            Host: 'in-v3.mailjet.com',
+            Username: 'ba12349749dd12f07dcadccf75efb5ff',
+            Password: '0da2829b0de0e0dc4aebed8f89eae8a3',
+            To: this.email,
+            From: 'contato@fidelly.com.br',
+            Subject: 'Você ganhou um novo selo!',
+            Body: 'Parabéns, você ganhou um novo selo. Para saber mais baixe o Fidelly e conclua o seu cadastro.\n\nhttps://drive.google.com/open?id=1Q58l6vc5GqQsc2-lkEIBd7m6K_fGnU9B',
+          });
+        }
+        this.snackbar.text = 'Você ganhou um novo selo!';
+        this.snackbar.show = true;
+        this.email = '';
+      } catch(error) {
+        console.log(error);
+      } finally {
+        this.loading = false;
+      }
+    }
+  }
+
+  public async getAward({ form, value }: any) {
+    this.error = '';
+    if (!form.validate()) {
+      return;
+    }
+    this.loading = true;
+    try {
+      await mobile.auth().signInWithEmailAndPassword(value.email, value.password);
+      const userId = this.$store.state.user.uid;
+      const storeRef = db.collection('store').doc(userId);
+      const store = await storeRef.get();
+      const storeId = store.id;
+      const doc = await mobileDB.collection('users').doc(value.email).get();
+      const cards = await mobileDB.collection('cards').doc(doc.data().id).collection('cards').get();
+      let card = null;
+      cards.forEach((doc: any) => {
+        if (doc.data().storeId === storeId) {
+          card = { id: doc.id, ...doc.data() };
+        }
+      });
+      if (!card || card.amount < this.selectedAward.amount) {
+        this.showErrorMessage();
+        form.reset();
+        return;
+      }
+      let remaining = -1;
+      this.awards.forEach((award: any) => {
+        const amount = award.amount;
+        if (remaining === -1 || amount < remaining) {
+          remaining = amount;
+        }
+      });
+      card.used = (card.used || 0) + this.selectedAward.amount;
+      card.amount -= this.selectedAward.amount;
+      card.remaining = remaining - card.amount;
+      await mobileDB.collection('cards').doc(doc.data().id).collection('cards').doc(card.id).update({
+        used: card.used, amount: card.amount, remaining: card.remaining,
+      });
+      this.snackbar.text = 'Parabéns, você resgatou uma recompensa!';
+      this.snackbar.show = true;
+      form.reset();
+    } catch (error) {
+      this.error = 'E-mail ou senha inválidos';
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  showErrorMessage() {
+    this.errorDialog.title = 'Operação inválida';
+    this.errorDialog.text = 'Você não possui selos suficientes para resgatar esse recompensa.';
+    this.errorDialog.show = true;
   }
 }
 </script>

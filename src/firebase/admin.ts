@@ -1,5 +1,5 @@
 import * as firebase from 'firebase/app';
-import { adminConfig } from '@/firebase';
+import { adminConfig, mobileConfig } from '@/firebase';
 import router from '@/router';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -7,13 +7,15 @@ import store from '@/store';
 import { Route } from 'vue-router';
 
 // Initialize Firebase
-firebase.initializeApp(adminConfig);
-export const db = firebase.firestore();
+export const admin = firebase.initializeApp(adminConfig);
+export const mobile = firebase.initializeApp(mobileConfig, 'mobile');
+export const db = admin.firestore();
+export const mobileDB = mobile.firestore();
 
 let guardInitialized = false;
 const routesWithoutSession = ['/login', '/signup', '/password-reset'];
 
-firebase.auth().onAuthStateChanged((user) => {
+admin.auth().onAuthStateChanged((user) => {
   checkUserSession(user);
   store.commit('user', user);
   store.commit('initialized');

@@ -1,6 +1,7 @@
 <template>
   <v-container class="pa-3" fluid v-if="$store.state.user">
     <v-data-table
+      v-if="!loading"
       :headers="headers"
       :items="items">
       <template v-slot:items="props">
@@ -15,12 +16,19 @@
         </div>
       </template>
     </v-data-table>
+    <v-progress-circular v-if="loading"
+        class="center"
+        indeterminate
+        color="primary"
+        size="64"
+      ></v-progress-circular>
   </v-container>
 </template>
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
+import { db, mobileDB } from '../firebase/admin';
 
 @Component
 export default class Awards extends Vue {
@@ -28,48 +36,43 @@ export default class Awards extends Vue {
     { text: 'Nome', value: 'name' },
     { text: 'E-mail', value: 'email' },
     { text: 'Selos adquiridos', value: 'amount' },
-    { text: 'Selos utilizados', value: 'amountUsed' },
+    { text: 'Selos utilizados', value: 'used' },
   ];
-  public items: any[] = [
-    {
-      id: '1',
-      name: 'Luiz Filho',
-      email: 'luiz.macfilho@gmail.com',
-      amount: 7,
-      amountUsed: 4
-    },
-    {
-      id: '2',
-      name: 'Gustavo Otto',
-      email: 'gugaotto@gmail.com',
-      amount: 10,
-      amountUsed: 9
-    },
-    {
-      id: '3',
-      name: 'Isabella Cerbino',
-      email: 'bellacerbino@gmail.com',
-      amount: 2,
-      amountUsed: 0
-    },
-    {
-      id: '4',
-      name: 'Felipe Peron',
-      email: 'feliperon@gmail.com',
-      amount: 6,
-      amountUsed: 0
-    },
-    {
-      id: '5',
-      name: 'Renan Cossenzo',
-      email: 'renan.cossenzo@gmail.com',
-      amount: 12,
-      amountUsed: 10
-    }
-  ];
+  public items: any[] = [];
+  public loading = false;
 
-  public created() {
+  public async created() {
+    this.loading = true;
     this.$store.commit('title', 'message.clients');
+    try {
+      const users = await mobileDB.collection('cards').get();
+      const userId = this.$store.state.user.uid;
+      const storeRef = db.collection('store').doc(userId);
+      const storeId = (await storeRef.get()).id;
+      const cards = await mobileDB.collection('users').where(`stores.${storeId}`, '==', true).get();
+      cards.docs.forEach(async (doc) => {
+        const userId = doc.data().id;
+        const card = await mobileDB.collection('cards').doc(userId).collection('cards').where('storeId', '==', storeId).get();
+        card.docs.forEach((d) => {
+          this.items.push({
+            id: userId,
+            name: doc.data().name,
+            email: doc.data().email,
+            amount: d.data().amount + d.data().used,
+            amountUsed: d.data().used,
+          });
+        });
+      });
+    } finally {
+      this.loading = false;
+    }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+</style>

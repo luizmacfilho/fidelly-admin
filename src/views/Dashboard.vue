@@ -1,22 +1,38 @@
 <template>
   <v-container class="dashboard__container" fluid grid-list-lg v-if="$store.state.user">
     <v-layout row wrap>
-      <v-flex xs12 sm3>
+      <v-flex xs12 sm4>
         <v-card>
           <v-card-title>Número de Clientes</v-card-title>
           <v-card-text>
-            <h1>5</h1>
+            <h1>{{totalClients}}</h1>
           </v-card-text>
         </v-card>
       </v-flex>
-      <v-flex xs12 sm9>
+      <v-flex xs12 sm4>
+        <v-card>
+          <v-card-title>Número Selos Adquiridos</v-card-title>
+          <v-card-text>
+            <h1>{{totalAmount}}</h1>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex xs12 sm4>
+        <v-card>
+          <v-card-title>Número Selos Utilizados</v-card-title>
+          <v-card-text>
+            <h1>{{totalUsed}}</h1>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+      <!-- <v-flex xs12 sm9>
          <v-card>
           <v-card-title>Selos adquiridos x Selos utilizados</v-card-title>
           <v-card-text>
             <apexchart type=bar height=350 :options="chartOptions" :series="series" />
           </v-card-text>
         </v-card>
-      </v-flex>
+      </v-flex> -->
     </v-layout>
   </v-container>
 </template>
@@ -24,6 +40,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { application, IApplication } from '../components/Application';
+import { mobileDB, db } from '../firebase/admin';
 
 @Component
 export default class Dashboard extends Vue {
@@ -65,6 +82,10 @@ export default class Dashboard extends Vue {
       opacity: 1
     },
   }
+  public loading = false;
+  public totalClients = 0;
+  public totalUsed = 0;
+  public totalAmount = 0;
 
   constructor() {
     super();
@@ -72,8 +93,27 @@ export default class Dashboard extends Vue {
     this.application.showMenu = true;
   }
 
-  public created() {
+  public async created() {
+    this.loading = true;
     this.$store.commit('title', 'message.dashboard');
+    try {
+      const users = await mobileDB.collection('cards').get();
+      const userId = this.$store.state.user.uid;
+      const storeRef = db.collection('store').doc(userId);
+      const storeId = (await storeRef.get()).id;
+      const cards = await mobileDB.collection('users').where(`stores.${storeId}`, '==', true).get();
+      cards.docs.forEach(async (doc) => {
+        const userId = doc.data().id;
+        const card = await mobileDB.collection('cards').doc(userId).collection('cards').where('storeId', '==', storeId).get();
+        card.docs.forEach((d) => {
+          this.totalClients += 1;
+          this.totalAmount += d.data().amount + d.data().used;
+          this.totalUsed += d.data().used;
+        });
+      });
+    } finally {
+      this.loading = false;
+    }
   }
 }
 </script>

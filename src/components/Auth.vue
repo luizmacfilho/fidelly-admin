@@ -49,6 +49,10 @@ export default class Login extends Vue {
   public signin() {
     this.$emit('auth:submit', { form: this.$refs.form, value: this.formValue });
   }
+
+  public reset() {
+    (this.$refs.form as any).reset();
+  }
 }
 </script>
 <style lang="scss">
